@@ -5,11 +5,22 @@ import Button from "../Utilities/Buttons/Button"
 import { GiHamburgerMenu } from "react-icons/gi"; // Hamburger icon
 import { IoClose } from "react-icons/io5"; // Close icon
 import Logo from "../Utilities/Logo/Logo"
+import { useGSAP } from "@gsap/react";
+import gsap from 'gsap'
 
 const Header = () => {
   const [theme, setTheme] = useState(false);
   const [navToggle, setNavToggle] = useState(false);
   const [toggleBtn, setToggleBtn] = useState(true);
+
+  useGSAP(() => {
+    gsap.from(".gsap-animation-nav", {
+      y:-30,
+      duration:0.5,
+      opacity: 0,
+      stagger: 0.3,
+    })
+  })
 
   useEffect(() => {
     document.querySelector("html").classList.remove("light", "dark");
@@ -80,10 +91,10 @@ const Header = () => {
           </ul>
         </div>
         {/* logo */}
-        <Logo />
+        <Logo/>
 
         {/* Navlinks */}
-        <ul className="hidden md:flex justify-center items-center space-x-3 md:space-x-5 font-medium ">
+        <ul className="hidden md:flex justify-center items-center space-x-3 md:space-x-5 font-medium gsap-animation-nav">
           <li>
             <NavLink
               to={"/"}
@@ -129,7 +140,7 @@ const Header = () => {
         </ul>
 
         {/* buttons */}
-        <div className="buttons space-x-2 ">
+        <div className="buttons space-x-2  gsap-animation-nav">
           <Link to={"/login"} className="hidden md:inline-block">
             <Button 
             label="Log In"
