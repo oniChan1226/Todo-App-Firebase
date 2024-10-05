@@ -14,11 +14,22 @@ const Header = () => {
   const [toggleBtn, setToggleBtn] = useState(true);
 
   useGSAP(() => {
-    gsap.from(".gsap-animation-nav", {
-      y:-30,
+    let tl = gsap.timeline()
+    tl.from(".gsap-animation-logo", {
+      x:-100,
       duration:0.5,
       opacity: 0,
+    })
+    tl.from(".gsap-animation-nav", {
+      y:-30,
+      duration:0.3,
+      opacity: 0,
       stagger: 0.3,
+    })
+    tl.from(".gsap-animation-btns", {
+      x:50,
+      duration:0.3,
+      opacity: 0,
     })
   })
 
@@ -94,8 +105,8 @@ const Header = () => {
         <Logo/>
 
         {/* Navlinks */}
-        <ul className="hidden md:flex justify-center items-center space-x-3 md:space-x-5 font-medium gsap-animation-nav">
-          <li>
+        <ul className="hidden md:flex justify-center items-center space-x-3 md:space-x-5 font-medium">
+          <li className="gsap-animation-nav">
             <NavLink
               to={"/"}
               className={({ isActive }) =>
@@ -109,7 +120,7 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-          <li>
+          <li className="gsap-animation-nav">
             <NavLink
               to={"/features"}
               className={({ isActive }) =>
@@ -123,7 +134,7 @@ const Header = () => {
               Features
             </NavLink>
           </li>
-          <li>
+          <li className="gsap-animation-nav">
             <NavLink
               to={"/contact"}
               className={({ isActive }) =>
@@ -140,19 +151,21 @@ const Header = () => {
         </ul>
 
         {/* buttons */}
-        <div className="buttons space-x-2  gsap-animation-nav">
+        <div className="buttons space-x-2  gsap-animation-btns">
           <Link to={"/login"} className="hidden md:inline-block">
             <Button 
-            label="Log In"
             isIndex="primary"
-            />
+            >
+              Log in
+            </Button>
           </Link>
 
           <Link to={"/signup"} className="hidden md:inline-block">
-            <Button 
-            label="Sign Up"
-            isIndex="Secondary"
-            />
+          <Button 
+            isIndex="secondary"
+            >
+              Sign up
+            </Button>
           </Link>
 
           <CustomizedSwitches toggleTheme={() => setTheme((prev) => !prev)} />

@@ -1,11 +1,15 @@
-import React from 'react'
+import React from 'react';
 
-const PrimaryBtn = ({ label="button", isIndex="primary" }) => {
+const PrimaryBtn = ({ isIndex = "primary", children }) => {
+  const baseClasses = "border border-purpleMain px-3 py-1 rounded-md font-normal dark:text-gray-300";
+  const primaryClasses = "hover:bg-purpleMain";
+  const secondaryClasses = "bg-purpleMain hover:bg-transparent";
+
   return (
-    <button className={` ${isIndex === "primary" ? "border border-purpleMain px-3 py-1 rounded-md font-normal hover:bg-purpleMain dark:text-gray-300" : "bg-purpleMain border border-purpleMain px-3 py-1 rounded-md font-normal hover:bg-transparent dark:text-gray-300"}`}>
-              {label}
+    <button className={`${baseClasses} ${isIndex === "primary" ? primaryClasses : secondaryClasses}`}>
+      {children}
     </button>
-  )
-}
+  );
+};
 
-export default PrimaryBtn
+export default PrimaryBtn;

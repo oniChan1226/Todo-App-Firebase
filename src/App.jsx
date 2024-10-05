@@ -8,6 +8,7 @@ import Layout from "./Layout/Layout.jsx";
 import Home from "./Pages/Home/Home.jsx";
 import Features from "./Pages/Features/Features.jsx";
 import Contact from "./Pages/Contact/Contact.jsx";
+import NotFound from "./Pages/NotFound/NotFound.jsx"
 
 function App() {
   const router = createBrowserRouter(
@@ -16,6 +17,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/features" element={<Features />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     )
   );

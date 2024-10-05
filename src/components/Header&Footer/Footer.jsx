@@ -27,7 +27,7 @@ const Footer = () => {
       </div>
 
       <footer className="text-purpleMain text-sm md:text-base tracking-wide md:tracking-widest text-center whitespace-nowrap py-2 px-2 md:font-bold">
-        &copy; {currentYear} YourCompanyName. All Rights Reserved.
+        &copy; {currentYear} Todoist. All Rights Reserved.
       </footer>
     </section>
   );
