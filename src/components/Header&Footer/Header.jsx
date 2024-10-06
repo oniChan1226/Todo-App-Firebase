@@ -7,6 +7,8 @@ import { IoClose } from "react-icons/io5"; // Close icon
 import Logo from "../Utilities/Logo/Logo"
 import { useGSAP } from "@gsap/react";
 import gsap from 'gsap'
+import { useUserAuth } from "../Contexts/UserAuthContext";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [theme, setTheme] = useState(false);
@@ -41,6 +43,20 @@ const Header = () => {
   const handleBackdropClick = () => {
     setNavToggle(false);
     setToggleBtn(true);
+  }
+
+  const { logOut, user } = useUserAuth();
+
+  const handleLogOut = async () => {
+    console.log("called")
+    try {
+      await logOut();
+      toast.success("Until we meet again! buhahaha");
+    }
+    catch(error) {
+      toast.error("Error Logging out");
+    }
+
   }
 
   return (
@@ -122,6 +138,20 @@ const Header = () => {
           </li>
           <li className="gsap-animation-nav">
             <NavLink
+              to={"/todo"}
+              className={({ isActive }) =>
+                `${
+                  isActive
+                    ? "text-purpleMain"
+                    : "text-text_gray dark:text-text_gray_dark"
+                } hover:text-purpleMain hover:dark:text-purpleMain`
+              }
+            >
+              Todos
+            </NavLink>
+          </li>
+          <li className="gsap-animation-nav">
+            <NavLink
               to={"/features"}
               className={({ isActive }) =>
                 `${
@@ -152,7 +182,16 @@ const Header = () => {
 
         {/* buttons */}
         <div className="buttons space-x-2  gsap-animation-btns">
-          <Link to={"/login"} className="hidden md:inline-block">
+          {user ? (
+          <>
+            <Button 
+            isIndex="primary"
+            onClick={handleLogOut}
+            >
+              Log out
+            </Button>
+          </> )
+          :(<><Link to={"/login"} className="hidden md:inline-block">
             <Button 
             isIndex="primary"
             >
@@ -167,6 +206,7 @@ const Header = () => {
               Sign up
             </Button>
           </Link>
+          </>)}
 
           <CustomizedSwitches toggleTheme={() => setTheme((prev) => !prev)} />
         </div>
