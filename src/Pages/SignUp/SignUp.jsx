@@ -46,7 +46,7 @@ const SignUp = () => {
   const onSubmit = async (data) => {
     setIsRegistering(true);
     try {
-      await signUp(data.email, data.password);
+      await signUp(data.email, data.password, data.userName);
       navigate("/todo");
       toast.success(`${data.userName} is Registered!`);
     } catch (error) {

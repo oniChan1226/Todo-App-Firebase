@@ -48,10 +48,9 @@ const Header = () => {
   const { logOut, user } = useUserAuth();
 
   const handleLogOut = async () => {
-    console.log("called")
     try {
       await logOut();
-      toast.success("Until we meet again! buhahaha");
+      toast.success("Logged Out Successfully");
     }
     catch(error) {
       toast.error("Error Logging out");
@@ -136,7 +135,7 @@ const Header = () => {
               Home
             </NavLink>
           </li>
-          <li className="gsap-animation-nav">
+          {user && user.uid && <li className="gsap-animation-nav">
             <NavLink
               to={"/todo"}
               className={({ isActive }) =>
@@ -149,7 +148,7 @@ const Header = () => {
             >
               Todos
             </NavLink>
-          </li>
+          </li>}
           <li className="gsap-animation-nav">
             <NavLink
               to={"/features"}

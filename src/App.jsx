@@ -16,6 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './Pages/ProtectedRoute/ProtectedRoute.jsx'
 import LogIn from "./Pages/LogIn/LogIn.jsx";
+import LogedInValidationRoute from "./Pages/ProtectedRoute/LogedInValidationRoute.jsx";
 
 function App() {
   const router = createBrowserRouter(
@@ -29,8 +30,16 @@ function App() {
               <TodoPage /> 
           </ProtectedRoute>
         }/>
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={
+            <LogedInValidationRoute>
+              <SignUp /> 
+            </LogedInValidationRoute>
+        }/>
+        <Route path="/login" element={
+            <LogedInValidationRoute>
+              <LogIn /> 
+            </LogedInValidationRoute>
+        }/>
         <Route path="*" element={<NotFound />} />
       </Route>
     )

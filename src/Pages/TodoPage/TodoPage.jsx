@@ -2,22 +2,14 @@ import React from 'react'
 import { useUserAuth } from '../../components/Contexts/UserAuthContext'
 
 const TodoPage = () => {
-  const {user} = useUserAuth();
 
-  if(!user || !user.uid) {
-    // console.log('check user in private', user);
-
-
-    return (
-      <>
-        <div>login</div>
-      </>
-    )
-  }
-  console.log('check user in private', user);
+  const { user } = useUserAuth();
 
   return (
-    <div>TodoPage</div>
+    <div>
+      <div>{user.username}</div>
+      a
+    </div>
   )
 }
 

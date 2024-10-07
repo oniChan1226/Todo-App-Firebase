@@ -7,7 +7,8 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth } from "../Firebase/Firebase";
+import { auth, db } from "../Firebase/Firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 const UserAuthContext = createContext();
 
@@ -17,22 +18,43 @@ export const useUserAuth = () => {
 
 export const UserAuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
+  const [isLogedIn, setIsLogedIn] = useState(false);
 
-  const logIn = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const logIn = async (email, password) => {
+    const userCredentials = await signInWithEmailAndPassword(auth, email, password);
+    setIsLogedIn(true);
+    return userCredentials;
   };
 
-  const signUp = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signUp = async (email, password, username = "") => {
+    const userCredentials = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredentials.user;
+    await setDoc(doc(db, "Users", user.uid), {
+      email: user.email,
+      username: username,
+    });
+    return userCredentials;
   };
 
   const logOut = () => {
+    setIsLogedIn(false);
     return signOut(auth);
   };
 
-  const googleSignIn = () => {
+  const googleSignIn = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleAuthProvider);
+    const userCredentials = await signInWithPopup(auth, googleAuthProvider);
+    setIsLogedIn(true);
+    const user = userCredentials.user;
+    await setDoc(doc(db, "Users", user.uid), {
+      email: user.email,
+      username: user.displayName,
+    })
+    return userCredentials;
   };
 
   useEffect(() => {
@@ -45,7 +67,7 @@ export const UserAuthContextProvider = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, googleSignIn }}
+      value={{ user, logIn, signUp, logOut, googleSignIn, isLogedIn }}
     >
       {children}
     </UserAuthContext.Provider>

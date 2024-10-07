@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import InputField from "../../components/Utilities/InputField";
 import Button from "../../components/Utilities/Buttons/Button";
@@ -20,7 +20,7 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const { logIn, googleSignIn } = useUserAuth();
+  const { logIn, googleSignIn, user } = useUserAuth();
 
   const form = useForm({
     defaultValues: {
@@ -67,6 +67,12 @@ const LogIn = () => {
         setIsLoggingIn(false);
     }
   }
+
+//   useEffect(() => {
+//     if (user) {
+//         navigate("/todo");
+//     }
+// }, [user, navigate]);
 
   return (
     <div className="dark:bg-bgDark flex flex-col justify-center items-center py-12 md:py-20 px-4 space-y-1">
