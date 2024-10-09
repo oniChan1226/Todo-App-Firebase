@@ -1,13 +1,14 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 
-const InputField = ({ label = "", type = "text", register, registerName, error }) => {
+const InputField = ({ label = "", type = "text", register, registerName, error, isDisabled=false }) => {
     return (
         <TextField
             label={label}
             variant="outlined"
             type={type}
             helperText={error ? error : ""}
+            disabled={isDisabled}
             // helperText={"error"}
             error={!!error} // This adds red border if there's an error
             {...register(registerName)} // Register hook for form validation

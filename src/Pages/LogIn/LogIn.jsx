@@ -114,7 +114,7 @@ const LogIn = () => {
         </div>
         <div className="flex items-center justify-center space-x-2 w-full">
           <Button type="submit" width="w-full" disabled={isLoggingIn}>
-            {isLoggingIn ? <PulseLoader color="#fff" size={8} /> : "LogIn"}
+            {isLoggingIn ? <PulseLoader color="#7871fc" size={8} /> : "LogIn"}
           </Button>
         </div>
         <div className="w-full">

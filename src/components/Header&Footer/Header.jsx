@@ -55,6 +55,10 @@ const Header = () => {
     catch(error) {
       toast.error("Error Logging out");
     }
+    finally {
+      setNavToggle(false); 
+      setToggleBtn(true);
+    }
 
   }
 
@@ -64,24 +68,24 @@ const Header = () => {
         className={` md:w-[85%] xl:w-[80%] md:mx-auto px-3 md:px-0 py-3 md:py-6 flex justify-between items-center text-xl relative`}
       >
         {/* Backdrop for mobile navigation */}
-        {navToggle && (
+        {/* {navToggle && (
           <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40"
           onClick={handleBackdropClick}
           ></div>
-        )}
+        )} */}
         {/* Mobile Navigation */}
         <div className=" md:hidden">
           <GiHamburgerMenu className={`${toggleBtn ? "inline-block" : "hidden"} text-2xl text-text_gray_dark mr-2`} onClick={() => {setNavToggle(true); setToggleBtn(false)}} />
-          <IoClose className={`${toggleBtn ? "hidden" : "inline-block"} text-2xl text-text_gray dark:text-text_gray_dark mr-2`} onClick={() =>{ setNavToggle(false); setToggleBtn(true)}} />
-          <ul className={` ${navToggle ? "left-0 opacity-100 blur-none" : "left-[-100%] opacity-0 blur-sm"} flex flex-col justify-center absolute top-[100%] z-50 pl-4 py-3 space-y-2 text-xl w-full bg-white dark:bg-gray-500 font-medium tracking-wide text-black transition-all duration-500`}>
+          <IoClose className={`${toggleBtn ? "hidden" : "inline-block"} text-2xl text-text_gray_dark mr-2`} onClick={() =>{ setNavToggle(false); setToggleBtn(true)}} />
+          <ul className={` ${navToggle ? "left-0 opacity-100 blur-none" : "left-[-100%] opacity-0 blur-sm"} flex flex-col justify-center absolute top-[100%] z-50 pl-4 py-12 space-y-8 text-xl w-full bg-white dark:bg-gray-500 font-medium tracking-wide text-black transition-all duration-500`}>
             <li>
               <NavLink to={"/"}
               className={({ isActive }) =>
                 `${
                   isActive
                     ? "text-orange-500"
-                    : ""
+                    : "dark:text-text_gray_dark text-text_gray"
                 } `
               }
               onClick={() => {setNavToggle(false); setToggleBtn(true)}}>
@@ -94,7 +98,7 @@ const Header = () => {
                 `${
                   isActive
                     ? "text-orange-500"
-                    : ""
+                    : "dark:text-text_gray_dark :text-text_gray"
                 }`
               }
               onClick={() => {setNavToggle(false); setToggleBtn(true)}}>
@@ -107,13 +111,40 @@ const Header = () => {
                 `${
                   isActive
                     ? "text-orange-500"
-                    : ""
+                    : "dark:text-text_gray_dark text-text_gray"
                 } `
               }
               onClick={() => {setNavToggle(false); setToggleBtn(true)}}>
                 Contact
               </NavLink>
             </li>
+            {user ? (
+          <li>
+            <Button 
+            isIndex="primary"
+            onClick={handleLogOut}
+            >
+              Log out
+            </Button>
+          </li> )
+          :(<li className="space-y-3 flex flex-col justify-start items-start"><Link to={"/login"}>
+            <Button 
+            isIndex="primary"
+            onClick={() => {setNavToggle(false); setToggleBtn(true)}}
+            >
+              Log in
+            </Button>
+          </Link>
+
+          <Link to={"/signup"} >
+          <Button 
+            isIndex="secondary"
+            onClick={() => {setNavToggle(false); setToggleBtn(true)}}
+            >
+              Sign up
+            </Button>
+          </Link>
+          </li>)}
           </ul>
         </div>
         {/* logo */}

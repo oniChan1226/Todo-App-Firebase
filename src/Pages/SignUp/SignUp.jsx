@@ -135,7 +135,7 @@ const SignUp = () => {
         </div>
         <div className="flex items-center justify-center space-x-2 w-full">
           <Button type="submit" width="w-full" disabled={isRegistering}>
-            {isRegistering ? <PulseLoader color="#fff" size={8} /> : "Sign Up"}
+            {isRegistering ? <PulseLoader color="#7871fc" size={8} /> : "Sign Up"}
           </Button>
           <Button type="reset" width="w-full" isIndex="secondary">
             Reset

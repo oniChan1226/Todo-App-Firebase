@@ -8,7 +8,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth, db } from "../Firebase/Firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
+import { useCallback } from 'react'
 
 const UserAuthContext = createContext();
 
@@ -18,11 +19,13 @@ export const useUserAuth = () => {
 
 export const UserAuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
-  const [isLogedIn, setIsLogedIn] = useState(false);
 
   const logIn = async (email, password) => {
-    const userCredentials = await signInWithEmailAndPassword(auth, email, password);
-    setIsLogedIn(true);
+    const userCredentials = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredentials;
   };
 
@@ -41,21 +44,30 @@ export const UserAuthContextProvider = ({ children }) => {
   };
 
   const logOut = () => {
-    setIsLogedIn(false);
     return signOut(auth);
   };
 
   const googleSignIn = async () => {
     const googleAuthProvider = new GoogleAuthProvider();
     const userCredentials = await signInWithPopup(auth, googleAuthProvider);
-    setIsLogedIn(true);
     const user = userCredentials.user;
     await setDoc(doc(db, "Users", user.uid), {
       email: user.email,
       username: user.displayName,
-    })
+    });
     return userCredentials;
   };
+
+  const fetchUser = useCallback(async (uid) => {
+    try {
+      const userDoc = await getDoc(doc(db, "Users", uid));
+      if (userDoc.exists()) return userDoc.data();
+      return null;
+    } catch (error) {
+      console.log(`Error in UserAuthContext:: fetchUser:: ${error}`);
+      return null;
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -67,7 +79,7 @@ export const UserAuthContextProvider = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, googleSignIn, isLogedIn }}
+      value={{ user, logIn, signUp, logOut, googleSignIn, fetchUser }}
     >
       {children}
     </UserAuthContext.Provider>
