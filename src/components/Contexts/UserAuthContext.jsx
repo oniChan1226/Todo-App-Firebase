@@ -8,7 +8,7 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import { auth, db } from "../Firebase/Firebase";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import { setDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { useCallback } from 'react'
 
 const UserAuthContext = createContext();
@@ -58,6 +58,13 @@ export const UserAuthContextProvider = ({ children }) => {
     return userCredentials;
   };
 
+  const updateDocument = async (todos) => {
+    const userRef = doc(db, "Users", user.uid);
+    await updateDoc(userRef, {
+      todosList: todos,
+    });
+  }
+
   const fetchUser = useCallback(async (uid) => {
     try {
       const userDoc = await getDoc(doc(db, "Users", uid));
@@ -79,7 +86,7 @@ export const UserAuthContextProvider = ({ children }) => {
 
   return (
     <UserAuthContext.Provider
-      value={{ user, logIn, signUp, logOut, googleSignIn, fetchUser }}
+      value={{ user, logIn, signUp, logOut, googleSignIn, fetchUser, updateDocument }}
     >
       {children}
     </UserAuthContext.Provider>

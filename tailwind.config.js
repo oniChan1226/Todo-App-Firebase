@@ -16,6 +16,9 @@ export default {
         bgDark: '#1f2937',
         bgSlightDark: '#1f2f37',
         SlightWhite: '#e1e1e1',
+        lightGray: '#cccccc',
+        mediumGray: '#888888',
+
       },
     },
   },
