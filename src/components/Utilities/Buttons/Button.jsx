@@ -8,7 +8,7 @@ const Button = ({ isIndex = "primary", type="", width="", disabled=false, childr
   const spacing = width ? width : "";
 
   return (
-    <button className={`${baseClasses} ${TodoFieldButton ? TodoFieldClasses : ""} ${isIndex === "primary" ? primaryClasses : secondaryClasses} ${spacing} ${disabled ? "bg-lightGray hover:bg-lightGray text-mediumGray " : ""}`} type={type} disabled={disabled} onClick={onClick}>
+    <button className={`${baseClasses} ${TodoFieldButton ? TodoFieldClasses : ""} ${isIndex === "primary" ? primaryClasses : secondaryClasses} ${spacing} ${disabled ? "bg-lightGray hover:bg-lightGray text-mediumGray dark:text-mediumGray " : ""}`} type={type} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );
