@@ -39,6 +39,7 @@ export const UserAuthContextProvider = ({ children }) => {
     await setDoc(doc(db, "Users", user.uid), {
       email: user.email,
       username: username,
+      todosList: "",
     });
     return userCredentials;
   };
@@ -54,6 +55,7 @@ export const UserAuthContextProvider = ({ children }) => {
     await setDoc(doc(db, "Users", user.uid), {
       email: user.email,
       username: user.displayName,
+      todosList: "",
     });
     return userCredentials;
   };
